@@ -41,13 +41,14 @@ fi
 
 $RUNTIME container run \
 	--name lgtm \
-	-p 3000:3000 \
+	-p 3123:3000 \
 	-p 4040:4040 \
 	-p 4317:4317 \
 	-p 4318:4318 \
 	-p 9090:9090 \
 	--rm \
 	-ti \
+	-v "$PWD"/docker/otelcol-config.yaml:/otel-lgtm/otelcol-config.yaml \
 	-v "${LOCAL_VOLUME}"/grafana:/data/grafana:"${MOUNT_OPTS}" \
 	-v "${LOCAL_VOLUME}"/prometheus:/data/prometheus:"${MOUNT_OPTS}" \
 	-v "${LOCAL_VOLUME}"/loki:/data/loki:"${MOUNT_OPTS}" \
