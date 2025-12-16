@@ -15,6 +15,24 @@ receivers:
           scrape_interval: 1s
           static_configs:
             - targets: ["127.0.0.1:8888"]
+  mysql:
+    endpoint: host.docker.internal:3306
+    username: root
+    password:
+    collection_interval: 5s
+    initial_delay: 5s
+    metrics:
+      mysql.query.slow.count:
+        enabled: true
+    statement_events:
+      digest_text_limit: 120
+      time_limit: 24h
+      limit: 250
+    events:
+      db.server.query_sample:
+        enabled: true
+      db.server.top_query:
+        enabled: true
 
 extensions:
   health_check:
@@ -23,6 +41,7 @@ extensions:
 
 processors:
   batch:
+  deltatocumulative:
 
 exporters:
   otlphttp/metrics:
@@ -57,12 +76,12 @@ service:
       exporters: [otlphttp/traces]
       #exporters: [otlphttp/traces,debug/traces]
     metrics:
-      receivers: [otlp, prometheus/collector]
-      processors: [batch]
+      receivers: [otlp, prometheus/collector, mysql]
+      processors: [deltatocumulative, batch]
       exporters: [otlphttp/metrics]
       #exporters: [otlphttp/metrics,debug/metrics]
     logs:
-      receivers: [otlp]
+      receivers: [otlp, mysql]
       processors: [batch]
       exporters: [otlphttp/logs]
       #exporters: [otlphttp/logs,debug/logs]
