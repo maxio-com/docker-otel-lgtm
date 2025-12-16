@@ -64,7 +64,7 @@ $RUNTIME container run \
 	--init \
 	"${OBI_FLAGS[@]}" \
 	"${OBI_ENV_FLAGS[@]}" \
-	-p 3000:3000 \
+	-p 3123:3000 \
 	-p 3200:3200 \
 	-p 4040:4040 \
 	-p 4317:4317 \
