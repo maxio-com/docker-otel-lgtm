@@ -99,6 +99,7 @@ if ((${#TTY_FLAGS[@]})); then
 fi
 
 RUN_FLAGS+=(
+	-v "$PWD"/docker/otelcol-config.yaml:/otel-lgtm/otelcol-config.yaml
 	-v "${LOCAL_VOLUME}"/grafana:/data/grafana:"${MOUNT_OPTS}"
 	-v "${LOCAL_VOLUME}"/prometheus:/data/prometheus:"${MOUNT_OPTS}"
 	-v "${LOCAL_VOLUME}"/loki:/data/loki:"${MOUNT_OPTS}"
