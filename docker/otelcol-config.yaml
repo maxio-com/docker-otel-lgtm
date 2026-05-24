@@ -76,12 +76,17 @@ service:
       exporters: [otlp_http/traces]
       #exporters: [otlp_http/traces,debug/traces]
     metrics:
-      receivers: [otlp, prometheus/collector, mysql]
+      receivers:
+        - otlp
+        - prometheus/collector
+        # - mysql  # uncomment when MySQL is running locally on host port 3306
       processors: [deltatocumulative, batch]
       exporters: [otlp_http/metrics]
       #exporters: [otlp_http/metrics,debug/metrics]
     logs:
-      receivers: [otlp, mysql]
+      receivers:
+        - otlp
+        # - mysql  # uncomment when MySQL is running locally on host port 3306
       processors: [batch]
       exporters: [otlp_http/logs]
       #exporters: [otlp_http/logs,debug/logs]
